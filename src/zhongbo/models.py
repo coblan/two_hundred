@@ -7,6 +7,11 @@ class TBTaskBridge(models.Model):
     
     san_taskid = models.CharField(max_length = 30)
     address = models.CharField(max_length = 400)
+    event_content = models.CharField(max_length=300)
+    status=models.IntegerField(verbose_name='状态',default=0)
+    create_time = models.DateTimeField(auto_now=True)
+    
+    
     
     
     
