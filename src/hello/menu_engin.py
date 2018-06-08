@@ -12,7 +12,7 @@ from .js_translation import get_tr
 from zhongbo.models import TBTaskBridge
 
 
-class WebMenu(BaseEngine):
+class PcMenu(BaseEngine):
     url_name='webpage'
     brand = '200'
     mini_brand='200'
