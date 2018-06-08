@@ -37,8 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'helper.director', 
-    'zhongbo'
+    'helpers.director', 
+    'helpers.authuser',
+    'helpers.case.jb_admin',
+    'zhongbo',
+    'hello',
+    
 ]
 
 MIDDLEWARE = [
@@ -114,10 +118,28 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+STATICFILES_FINDERS=[
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+]
+
+
+import sys
+if 'collectstatic' not in sys.argv:
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static').replace('\\', '/'),
+    )
+else:
+    STATIC_ROOT= os.path.join(BASE_DIR, 'static').replace('\\', '/')
+
+MEDIA_ROOT= os.path.join( os.path.dirname(BASE_DIR),'media')
+MEDIA_URL = '/media/'

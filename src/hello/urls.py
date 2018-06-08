@@ -17,12 +17,15 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from .menu_engin import PcMenu
 from django.views.generic import RedirectView 
+from helpers.authuser import urls as authuser_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+     url(r'^accounts/',include(authuser_urls)),
+     
     url(r'^pc/([\w\.]+)/?$',PcMenu.as_view(),name=PcMenu.url_name),
     url(r'^d/',include('helpers.director.urls'),name='director'),
     
-    url(r'^$',RedirectView.as_view(url='/pc/home')) ,
+    url(r'^$',RedirectView.as_view(url='/pc/taskpage')) ,
     
 ]
