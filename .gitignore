@@ -1,4 +1,4 @@
-*.py[cod]
+﻿*.py[cod]
 
 # C extensions
 *.so
@@ -39,6 +39,5 @@ nosetests.xml
 *.wpr
 *.wpu
 deploy/*.tar.gz
-wingdbstub.py
 /src/db.sqlite3
 /~$PI说明文档.doc

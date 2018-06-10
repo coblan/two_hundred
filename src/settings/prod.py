@@ -1,6 +1,5 @@
 # encoding:utf-8
 from .base import *
-import sys
 
 DATABASES = {
     'default': {
@@ -40,7 +39,7 @@ LOGGING = {
             'class': 'django.utils.log.AdminEmailHandler',
             'formatter':'standard',
         }, 
-        'getcaseFile':{
+        'getcase':{
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'maxBytes': 1024*1024*5,
@@ -49,18 +48,25 @@ LOGGING = {
             'filename': os.path.join(LOG_PATH,'getcase.log'),            
             },    
         'console': {
-            'level':'DEBUG',
-            'class': 'logging.StreamHandler',
-            'stream': sys.stdout
+                   'class': 'logging.StreamHandler',
                },        
     },
     'loggers': {
         'getcase': {
-            'handlers': ['console'],
+            'handlers': ['getcase'],
             'level': 'DEBUG',
             'propagate': True,            
             },
-      
+        'task':{
+            'handlers': ['rotfile'],
+            'level': 'DEBUG',
+            'propagate': True,            
+        },
+        'django.request': {
+            'handlers': ['rotfile'],
+            'level': 'ERROR',
+            'propagate': True,
+        },        
     }
 }
 
