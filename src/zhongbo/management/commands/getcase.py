@@ -66,7 +66,8 @@ class Command(BaseCommand):
                 'yuan_photos':';'.join( [x.get('filePath') for x in  case.get('photos',[])]),
                 'address':case.get('address'),
                 'event_content':case.get('events').get('eventContent'),
-                'yuan_occurredStr':case.get('occurredStr')
+                'yuan_occurredStr':case.get('occurredStr'),
+                'yuan_status':case.get('status')
                 
             }
             obj, created =TBTaskBridge.objects.update_or_create(yuan_id=case_id,defaults=dc)

@@ -5,8 +5,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'twoHundred',
-        'USER': 'postgres',
-        'PASSWORD': '123',
+        'USER': 'root',
+        'PASSWORD': 'root533',
         'HOST': '127.0.0.1', 
         'PORT': '5432', 
     },
@@ -15,6 +15,7 @@ DATABASES = {
 #DEV_STATUS='dev'
 #GDAL_LIBRARY_PATH = r'C:\Program Files\GDAL\gdal202'
 YUAN_JING='http://222.73.31.135:8084'
+ALLOWED_HOSTS=['10.235.80.248']
 
 import os
 LOG_PATH= os.path.join( os.path.dirname(BASE_DIR),'log')

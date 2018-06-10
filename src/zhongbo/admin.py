@@ -11,17 +11,26 @@ class TaskPage(TablePage):
     class tableCls(ModelTable):
         model=TBTaskBridge
         exclude=[]
-        fields_sort=['yuan_eventNum','san_taskid','yuan_occurredStr','address','event_content','create_time']
+        fields_sort=['yuan_eventNum','san_taskid','yuan_occurredStr','yuan_status','status','address','event_content','create_time']
         def get_operation(self):
             return [
                 {'name':'import_case','editor':'com-op-btn','label':'导入网格系统','style': 'color:green','icon': 'fa-handshake-o','disabled':'!has_select'},
                ]
+        def dict_head(self, head):
+            dc={
+                'yuan_eventNum':120,
+                'address':150,
+                'event_content':150,
+            }
+            head['width']=dc.get(head['name'],100)
+            return head
         
         def inn_filter(self, query):
             return query.order_by('-yuan_occurredStr')
         
         class filters(RowFilter):
             model=TBTaskBridge
+            names=['yuan_status']
             range_fields=['yuan_occurredStr']
         class sort(RowSort):
             names=['yuan_occurredStr']
