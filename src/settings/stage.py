@@ -54,17 +54,7 @@ LOGGING = {
             'handlers': ['getcase'],
             'level': 'DEBUG',
             'propagate': True,            
-            },
-        'task':{
-            'handlers': ['rotfile'],
-            'level': 'DEBUG',
-            'propagate': True,            
-        },
-        'django.request': {
-            'handlers': ['rotfile'],
-            'level': 'ERROR',
-            'propagate': True,
-        },        
+            },      
     }
 }
 
