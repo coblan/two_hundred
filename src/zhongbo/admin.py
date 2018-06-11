@@ -11,11 +11,59 @@ class TaskPage(TablePage):
     class tableCls(ModelTable):
         model=TBTaskBridge
         exclude=[]
-        fields_sort=['yuan_eventNum','san_taskid','yuan_occurredStr','yuan_status','status','address','event_content','create_time']
+        pop_edit_field='detail'
+        fields_sort=['yuan_eventNum','san_taskid','yuan_occurredStr','yuan_status','status','address','event_content','create_time','detail']
         def get_operation(self):
-            return [
+            opes = super().get_operation()
+            ls = [
                 {'name':'import_case','editor':'com-op-btn','label':'导入网格系统','style': 'color:green','icon': 'fa-handshake-o','disabled':'!has_select'},
                ]
+            opes.extend(ls)
+            return opes
+        
+        def getExtraHead(self):
+            return [{
+                'name':'detail',
+                'label':'',
+                'show_label':{
+                    'fun':'text_label',
+                    'text':'详情' 
+                }
+            }]
+            #return [{'name':'detail',
+                    #'label':'',
+                    #'editor':'com-table-pop-fields',
+                    #'fields_ctx':TaskForm(crt_user=self.crt_user).get_head_context(),
+                    #'show_label':{
+                        #'fun':'text_label',
+                        #'text':'详情'
+                    #},
+
+                    #'get_row':{
+                        #'fun':'get_with_relat_field',
+                        #'kws':{
+                           #'director_name':TaskForm.get_director_name(),
+                           #'relat_field':'pk',              
+                        #}                        
+                    #},
+                    ##'fun':'use_table_row',
+                    #'width':60,
+                     #}]
+            #return [{'name':'detail',
+                    #'label':'',
+                    #'editor':'com-table-extraclick',
+                    #'extra_label':'详情',
+                    #'get_data':{
+                        #'fun':'get_row',
+                        #'kws':{
+                           #'director_name':TaskForm.get_director_name(),
+                           #'relat_field':'pk',              
+                        #}                        
+                    #},
+                    #'fun':'use_table_row',
+                    #'width':60,
+                          #}]
+        
         def dict_head(self, head):
             dc={
                 'yuan_eventNum':120,
