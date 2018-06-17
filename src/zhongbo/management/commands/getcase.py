@@ -17,14 +17,14 @@ if getattr(settings,'DEV_STATUS',None)=='dev':
 def get_token(): 
     appkey = 'yuanjingkey12345678910'
     yuanjing_url= settings.YUAN_JING
-    url = urljoin(yuanjing_url,'/api?handler=token&key=%(appkey)s&method=getAccessToken' % {'appkey': appkey,} )
+    url = yuanjing_url+'/api?handler=token&key=%(appkey)s&method=getAccessToken' % {'appkey': appkey,}
     rt = requests.get(url)
     dc = json.loads(rt.text)
     return dc.get('data').get('access_token')
 
 def get_data(token,start,end): 
     access_token = get_token()
-    url = urljoin(settings.YUAN_JING,"/api?access_token=%(access_token)s&handler=event&method=export" % {'access_token': token,} )
+    url = settings.YUAN_JING+"/api?access_token=%(access_token)s&handler=event&method=export" % {'access_token': token,} 
     # status='新增'
     # 'unit_code':'201805116508',
     data = {

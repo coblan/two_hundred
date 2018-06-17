@@ -18,7 +18,9 @@ DATA_PROXY ={
 } 
 DEV_STATUS='dev'
 GDAL_LIBRARY_PATH = r'C:\Program Files\GDAL\gdal202.dll'
-YUAN_JING='http://222.73.31.135:8084'
+
+#YUAN_JING='http://222.73.31.135:8084'
+YUAN_JING='http://222.73.31.135:8080/yuanjing'
 
 import os
 LOG_PATH= os.path.join( os.path.dirname(BASE_DIR),'log')
