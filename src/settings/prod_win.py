@@ -1,5 +1,9 @@
 # encoding:utf-8
 from .base import *
+import sys
+
+
+
 
 DATABASES = {
     'default': {
@@ -12,8 +16,13 @@ DATABASES = {
     },
 }
 
+DATA_PROXY ={
+    'http': 'socks5://localhost:10899',
+} 
 #DEV_STATUS='dev'
-#GDAL_LIBRARY_PATH = r'C:\Program Files\GDAL\gdal202'
+GDAL_LIBRARY_PATH = r'C:\Program Files\GDAL\gdal202'
+#GDAL_LIBRARY_PATH = r'C:\Program Files (x86)\GDAL\gdal202.dll'
+#GDAL_LIBRARY_PATH=r'D:\work\two_hundred\GDAL\gdal202'
 
 YUAN_JING='http://222.73.31.135:8084'
 
@@ -37,7 +46,7 @@ LOGGING = {
             'class': 'django.utils.log.AdminEmailHandler',
             'formatter':'standard',
         }, 
-        'getcase':{
+        'getcaseFile':{
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
             'maxBytes': 1024*1024*5,
@@ -46,25 +55,18 @@ LOGGING = {
             'filename': os.path.join(LOG_PATH,'getcase.log'),            
             },    
         'console': {
-                   'class': 'logging.StreamHandler',
+            'level':'DEBUG',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout
                },        
     },
     'loggers': {
         'getcase': {
-            'handlers': ['getcase'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': True,            
             },
-        'task':{
-            'handlers': ['rotfile'],
-            'level': 'DEBUG',
-            'propagate': True,            
-        },
-        'django.request': {
-            'handlers': ['rotfile'],
-            'level': 'ERROR',
-            'propagate': True,
-        },        
+      
     }
 }
 
