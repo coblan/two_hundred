@@ -14,21 +14,46 @@ from requests_toolbelt import MultipartEncoder
 import json
 from urllib import parse
 from django.conf import settings
-proxies = {
-    'http':settings.PROXIY
-}
+import hashlib
+import os
 
-def put_task_to_sangao():
+
+proxies =  getattr(settings, 'DATA_PROXY','')
+
+def put_task_to_sangao(images,address,remark):
+    #taskid=get_taskid()
+    #upload_image(r'C:\Users\Administrator\Desktop\JE20180308170521.jpg')
+    #add_dc = address_2_info('会卓路涞港路闲置地')
+    #submit_task(add_dc,"三高系统测试案件，请删除" , taskid)
     taskid=get_taskid()
-    upload_image(r'C:\Users\Administrator\Desktop\JE20180308170521.jpg')
-    add_dc = address_2_info('会卓路涞港路闲置地')
-    submit_task(add_dc,"三高系统测试案件，请删除" , taskid)
+    for image in images:
+        image_path = save_image(image)
+        upload_image(image_path)
+    add_dc = address_2_info(address)
+    submit_task(add_dc,remark , taskid)
+    return taskid
 
+def save_image(image_url):
+    rt = requests.get(image_url)
+    h1= hashlib.md5()
+    h1.update(rt.content)
+    name = h1.hexdigest()
+    sufix = re.search('[^\.]+$',image_url).group()
+    tmp_dir=os.path.join(settings.MEDIA_ROOT,'yuan_image_tmp')
+    try:
+        os.makedirs(tmp_dir)
+    except OSError:
+        pass
+    
+    file_path = os.path.join(tmp_dir ,name+'.'+sufix)
+    with open(file_path,'wb') as f:
+        f.write(rt.content)
+    return file_path
+        
 
-
-proxies = {
-    'http': 'socks5://localhost:10855',
-}
+#proxies = {
+    #'http': 'socks5://localhost:10855',
+#}
 
 headers={
         'Cache-Control': 'max-age=0',
@@ -167,7 +192,7 @@ def run():
     add_dc = address_2_info('会卓路涞港路闲置地')
     submit_task(add_dc,"三高系统测试案件，请删除" , taskid)
     
-run()
+
 #upload_image(r'C:\Users\Administrator\Desktop\JE20180308170521.jpg')
 #dc = address_2_info('公园路100号')
 #print(dc)

@@ -1,0 +1,1 @@
+import * as put_task from './put_task_in_sangao'
