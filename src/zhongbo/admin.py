@@ -12,6 +12,9 @@ class TaskPage(TablePage):
         return '案件列表'
     
     class tableCls(ModelTable):
+        """
+        三高task地址: http://10.231.18.25/CityGrid/CaseOperate_flat/ParticularDisplayInfo.aspx?categoryId=undefined&taskid=1806B1651274
+        """
         model=TBTaskBridge
         exclude=[]
         pop_edit_field='detail'
