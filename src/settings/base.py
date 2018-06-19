@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'helpers.director', 
     'helpers.authuser',
     'helpers.case.jb_admin',
+    'helpers.case.gisapp',
     'zhongbo',
     'hello',
     

@@ -130,7 +130,7 @@ def upload_image(fl_path):
 
 def address_2_info(address):
     """
-    正常返回 1801@180111@18011101@-33126.91779446,-9232.44420218@-/-/-@公园路100号
+    三高系统，正常返回 1801@180111@18011101@-33126.91779446,-9232.44420218@-/-/-@公园路100号
     
     """
     url='http://10.231.18.25/CityGrid/AjaxHandlers/Ajax_GetGis.ashx?Method=GetStreetInfo&Address=%s'%address

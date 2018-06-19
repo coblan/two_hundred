@@ -1,10 +1,11 @@
-from django.db import models
+from django.contrib.gis.db import models
 
 # Create your models here.
 
 TASK_STATUS = (
     (0, '初始状态'),
     (1, '进入网格化'), 
+    (2,'地址需要整理')
 )
 
 YUAN_STATUS=(
@@ -26,6 +27,7 @@ class TBTaskBridge(models.Model):
     san_taskid = models.CharField(verbose_name = '三高taskid', max_length = 30,blank=True)
     address = models.CharField(verbose_name = '地址', max_length = 400)
     event_content = models.CharField(verbose_name = '事件内容', max_length=300)
+    loc = models.PointField(verbose_name='经纬度',blank=True,null=True)
     
     status=models.IntegerField(verbose_name='状态',default=0,choices=TASK_STATUS)
     create_time = models.DateTimeField(auto_now=True,verbose_name='导入时间')

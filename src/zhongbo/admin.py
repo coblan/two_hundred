@@ -2,7 +2,7 @@ from django.contrib import admin
 from helpers.director.shortcut import ModelTable,TablePage,page_dc,director,ModelFields,RowFilter,RowSort
 from .models import TBTaskBridge
 from helpers.maintenance.update_static_timestamp import js_stamp_dc
-
+from . import admin_gis
 # Register your models here.
 class TaskPage(TablePage):
     template='jb_admin/table.html'
@@ -18,7 +18,7 @@ class TaskPage(TablePage):
         model=TBTaskBridge
         exclude=[]
         pop_edit_field='detail'
-        fields_sort=['yuan_eventNum','san_taskid','yuan_occurredStr','yuan_status','status','address','event_content','create_time','detail']
+        fields_sort=['yuan_eventNum','san_taskid','yuan_occurredStr','yuan_status','status','address','event_content','create_time','loc','detail']
         def get_operation(self):
             opes = super().get_operation()
             ls = [

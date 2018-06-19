@@ -29,6 +29,11 @@ class PcMenu(BaseEngine):
                 {'label':'案件列表','url':page('taskpage'), 'visible': can_touch(TBTaskBridge, crt_user),},
                 #{'label':_('Tb Login Log'),'url':page('maindb.loginlog'), 'visible': can_touch(TbLoginlog, crt_user),},
                 ]},   
+            {'label':'GIS分析','icon':fa('fa-users'),'visible':True,
+            'submenu':[
+                {'label':'散点图','url':page('scatter'), 'visible': can_touch(TBTaskBridge, crt_user),},
+                #{'label':_('Tb Login Log'),'url':page('maindb.loginlog'), 'visible': can_touch(TbLoginlog, crt_user),},
+                            ]},  
             
             
              {'label':_('User'),'icon':fa('fa-user'),'visible':True,
