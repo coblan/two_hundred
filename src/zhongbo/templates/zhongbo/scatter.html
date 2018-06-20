@@ -1,6 +1,57 @@
 {% extends "jb_admin/table.html" %}
+{% load static %}
+{% load jsonify %}
 
+{% block extra_head %}
+<script src='{% static "js/gisapp.pack.js" %}?t={{ js_stamp.gisapp_pack_js }}'></script>
+<script src='{% static "js/zhongbo.pack.js" %}?t={{ js_stamp.zhongbo_pack_js }}'></script>
+<script>
+    var this_logic={
+        mounted:function(){
+
+//            var gaode = this.$refs.gaode
+//            ex.each(this.rows,function(row){
+//                if(row.loc){
+//                    var redCircle= new AMap.Marker({
+//                        icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+//                        position: row.loc,
+//                        //title:ex.template('{bigclass}/{litclass}',row),
+//                        content:'<div class="red circle"></div>'
+//                    })
+//                    gaode.addMark(redCircle)
+//                }
+//
+//            })
+//
+//            gaode.map.setFitView()
+
+        },
+        methods:{
+            onGaodeInit:function(gaode){
+                ex.each(this.rows,function(row){
+                    if(row.loc){
+                        var redCircle= new AMap.Marker({
+                            icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+                            position: row.loc,
+                            title:ex.template('{yuan_eventNum}|{event_content}',row) ,
+                            content:'<div class="blue circle"></div>'
+                        })
+                        gaode.addMark(redCircle)
+                    }
+
+                })
+                gaode.map.setFitView()
+            }
+        }
+    }
+    table_logic.mixins.push(this_logic)
+</script>
+
+{% endblock %}
 
 {% block tab-content %}
-<div>hello</div>
+<div style="position: relative;" class="flex-grow">
+
+    <com-gaode ref="gaode" @init="onGaodeInit"></com-gaode>
+</div>
 {% endblock %}

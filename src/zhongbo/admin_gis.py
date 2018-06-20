@@ -5,6 +5,10 @@ from helpers.maintenance.update_static_timestamp import js_stamp_dc
 
 class GisPage(TablePage):
     template='zhongbo/scatter.html'
+    
+    def get_label(self): 
+        return 'GIS散点图'
+    
     class tableCls(ModelTable):
         model=TBTaskBridge
         exclude = []
