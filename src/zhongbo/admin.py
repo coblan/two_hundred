@@ -3,6 +3,7 @@ from helpers.director.shortcut import ModelTable,TablePage,page_dc,director,Mode
 from .models import TBTaskBridge
 from helpers.maintenance.update_static_timestamp import js_stamp_dc
 from . import admin_gis
+from . import admin_chart
 # Register your models here.
 class TaskPage(TablePage):
     template='jb_admin/table.html'
