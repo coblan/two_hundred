@@ -15,27 +15,28 @@ from zhongbo.models import TBTaskBridge
 
 class PcMenu(BaseEngine):
     url_name='webpage'
-    brand = '200'
-    mini_brand='200'
+    brand = '中博会对接系统'
+    mini_brand='中博'
 
     @property
     def menu(self):
         crt_user = self.request.user
         menu=[
-            {'label':_('DashBoard'),'url':page('home'),'icon':fa('fa-home'), 'visible':True}, 
+            {'label':'主页','url':page('home'),'icon':fa('fa-home'), 'visible':True}, 
             
-            {'label':'案件统计','icon':fa('fa-users'),'visible':True,
-            'submenu':[
-                {'label':'区域分析','url':page('district_pie'), 'visible': can_touch(TBTaskBridge, crt_user),},
+            {'label':'案件统计','icon':fa('fa-bar-chart'),'visible':True,
+            'submenu':[ 
+                {'label':'案件状态','url':page('district_pie'), 'visible': can_touch(TBTaskBridge, crt_user),},
+                {'label':'案件走势','url':page('timetask_bar'), 'visible': can_touch(TBTaskBridge, crt_user),},
                 #{'label':_('Tb Login Log'),'url':page('maindb.loginlog'), 'visible': can_touch(TbLoginlog, crt_user),},
                            ]}, 
             
-            {'label':'案件管理','icon':fa('fa-users'),'visible':True,
+            {'label':'案件管理','icon':fa('fa-truck'),'visible':True,
             'submenu':[
                 {'label':'案件列表','url':page('taskpage'), 'visible': can_touch(TBTaskBridge, crt_user),},
                 #{'label':_('Tb Login Log'),'url':page('maindb.loginlog'), 'visible': can_touch(TbLoginlog, crt_user),},
                 ]},   
-            {'label':'GIS分析','icon':fa('fa-users'),'visible':True,
+            {'label':'GIS分析','icon':fa('fa-map-marker'),'visible':True,
             'submenu':[
                 {'label':'散点图','url':page('scatter'), 'visible': can_touch(TBTaskBridge, crt_user),},
                 #{'label':_('Tb Login Log'),'url':page('maindb.loginlog'), 'visible': can_touch(TbLoginlog, crt_user),},

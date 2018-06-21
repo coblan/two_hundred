@@ -1,0 +1,76 @@
+{% extends "jb_admin/fields.html" %}
+{% load static %}
+{% load jsonify %}
+
+{% block extra_head %}
+<script src='{% static "js/zhongbo.pack.js" %}?t={{ js_stamp.zhongbo_pack_js }}'></script>
+<script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts-en.common.min.js"></script>
+
+
+<script>
+    bar_data = {{ bar_data | jsonify }}
+
+    $(function(){
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        series= []
+        for(var i=0;i<bar_data.kind.length;i++){
+            series.push({
+                name:bar_data.kind[i],
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data:bar_data.series[i]
+            })
+        }
+        // 指定图表的配置项和数据
+        option = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                data: bar_data.kind
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            yAxis:  {
+                type: 'value'
+            },
+            xAxis: {
+                type: 'category',
+                data: bar_data.month,
+            },
+            series: series
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+    })
+
+</script>
+{% endblock %}
+
+
+{% block fields_content %}
+
+<div style="position: relative;" class="flex-grow">
+
+    <div id="main" style="position: absolute;top:15%;left:15%;right:15%;bottom: 15%;max-width: 800px;max-height:500px"></div>
+</div>
+
+{% endblock %}
+
