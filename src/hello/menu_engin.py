@@ -8,7 +8,7 @@ from helpers.func.collection.container import evalue_container
 from helpers.maintenance.update_static_timestamp import js_stamp
 from django.utils.translation import ugettext as _
 from django.conf import settings
-
+from . import permit_menu
 
 from zhongbo.models import TBTaskBridge
 
