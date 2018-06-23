@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'helpers.case.jb_admin',
     'zhongbo',
     'hello',
+    'suffix'
     
 ]
 
