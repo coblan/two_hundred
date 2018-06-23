@@ -30,9 +30,26 @@ def put_task_to_sangao(images,address,remark):
         image_path = save_image(image)
         upload_image(image_path)
     add_dc = address_2_info(address)
-    submit_task(add_dc,remark , taskid)
+    success = submit_task(add_dc,remark , taskid)
+    if not success:
+        headers['Cookie'] = get_cookie()
+        taskid=get_taskid()
+        for image in images:
+            image_path = save_image(image)
+            upload_image(image_path)
+        add_dc = address_2_info(address)
+        success = submit_task(add_dc,remark , taskid)
+        if not success:
+            raise UserWarning('上传任务失败')
     return taskid
 
+def get_cookie(): 
+    url = 'http://10.231.18.25/CityGrid/Logon.aspx'
+    data = '__VIEWSTATE=%2FwEPDwUKLTY2NDMxNzc3MGRkk1sQ5TsNvl2ZWXVV%2Fk%2BOiS67vOIsPEAvUh3rDdgEGws%3D&__EVENTVALIDATION=%2FwEWBgKi7IZqAobzk7oOAs61448FAqnM8OsBAoOQ69wEAtvg%2FWWhmSBDBuV8pbA32ZNXQNLjxJkIMjwIWwrWVMejLOTvFQ%3D%3D&txt_UserName=03005&txt_Password=8&ifwidth=1280&ifheight=1024&txt_LogIp=&btn_Login=+'
+     
+    rt = requests.post(url, data = data, proxies = proxies)
+    return rt.headers.get('Set-Cookie')
+    
 def save_image(image_url):
     rt = requests.get(image_url)
     h1= hashlib.md5()
@@ -66,8 +83,17 @@ headers={
         'Accept-Encoding': 'gzip, deflate',
         'Accept-Language': 'zh-CN,zh;q=0.9',
         'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4882.400 QQBrowser/9.7.13039.400',
-        'Cookie':'ASP.NET_SessionId=2sx0h4zdammuosiaaqjmuuxt; .ASPXAUTH=52498BC697C663AADB48806780E025A8330C775B858282AD21127CD82C299EA1CDBF97E4BD04B7DB5332A4F74143B014E889CEA863748473119C93BA53047503F2D19F83CFB9499D8E9878A9174E0E430B7D3F404ECA01203F7A0C6C30E4107C3D4EB2A1C342FA428C0B12B83EFA5EA244EB740704897D248D060BFC6146C1B39CF4BC54B025EFA30AA1E98F6CC0C278; ScreenWidth=2560; ScreenHeight=1440; Hm_lvt_ba7c84ce230944c13900faeba642b2b4=1528377687; Hm_lpvt_ba7c84ce230944c13900faeba642b2b4=1528379507; LoginType=login',
-    } 
+        #'Cookie': 'ASP.NET_SessionId=taulwuajqqcdlkysgyjci1gx;',
+        'Cookie':'ASP.NET_SessionId=cmf5kqjqzp0lsye1alo111vt', 
+} 
+#def get_header(reload = False): 
+    #inn_header = headers
+    #if not reload:
+        #inn_header ['Cookie'] = 
+    #else:
+        #pass
+        
+    #return inn_header
 
 def get_taskid():
     url='http://10.231.18.25/CityGrid/caseoperate_flat/XINZENG/PUBLICREPORT.ASPX?PROBLEMTYPE=0&RETURNURL=XINZENG/PUBLICREPORT.ASPX?Userid=03005&random=c4f6dbf3-9905-4e6f-6198-7999ddea5a5a'
@@ -94,17 +120,17 @@ def upload_image(fl_path):
                 'btnPicAddOk':'提交',
                 'pageindex':'0'}
         )
-    
-    headers.update(
+    inn_header = dict(headers)
+    inn_header.update(
         {'Content-Type': m.content_type}
     )
     
-    rt=requests.post(url,headers=headers,data=m ,proxies=proxies)
+    rt=requests.post(url,headers=inn_header,data=m ,proxies=proxies)
     # 不用返回什么
 
 def address_2_info(address):
     """
-    正常返回 1801@180111@18011101@-33126.91779446,-9232.44420218@-/-/-@公园路100号
+    三高系统，正常返回 1801@180111@18011101@-33126.91779446,-9232.44420218@-/-/-@公园路100号
     
     """
     url='http://10.231.18.25/CityGrid/AjaxHandlers/Ajax_GetGis.ashx?Method=GetStreetInfo&Address=%s'%address
@@ -167,13 +193,12 @@ def submit_task(address_dc,remark,taskid):
     arr.update(address_dc)
     arr['area_description']=remark
     
-    header2=headers
-    header2.update({
+    inn_header = dict( headers )
+    inn_header.update({
         'Accept':'*/*',
         'Referer':'http://10.231.18.25/CityGrid/caseoperate_flat/XINZENG/PUBLICREPORT.ASPX?PROBLEMTYPE=0&RETURNURL=XINZENG/PUBLICREPORT.ASPX?Userid=03005&random=c4f6dbf3-9905-4e6f-6198-7999ddea5a5a',
        'X-Requested-With':'XMLHttpRequest',
        'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-       'Cookie':'ASP.NET_SessionId=2sx0h4zdammuosiaaqjmuuxt; LoginType=login; .ASPXAUTH=79102B15085CD11881CBC9DB5BBD4EC4C53A885F440D8559668F4C44E81CC613B776B55ECAC2094D9017CF8CA6C0852BEE0229021E08E52E131542E861A0FA2944706F987F77D576130A282107C00F8BC2A329339C80C523B48F9F87218B1A9C6C5DCE42111B873A17C1522BF94D46489DB19D8E2202E36EC5B2522D414FDA9492E3D971DFFFE0F60BB28521E93A5438; ScreenWidth=2560; ScreenHeight=1440; Hm_lvt_ba7c84ce230944c13900faeba642b2b4=1528377687; Hm_lpvt_ba7c84ce230944c13900faeba642b2b4=1528387575'
     })
     
     data={
@@ -182,8 +207,10 @@ def submit_task(address_dc,remark,taskid):
         'taskid':taskid          
     }
     data_str=parse.urlencode(data)
-    rt = requests.post(url,data=data_str,headers=header2,proxies=proxies)
-    print(rt.text)
+    rt = requests.post(url,data=data_str,headers=inn_header,proxies=proxies)
+    #print(rt.text)
+    return rt.text.startswith('"True')
+    
     
      
 def run():

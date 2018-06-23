@@ -16,7 +16,7 @@ DATABASES = {
 #GDAL_LIBRARY_PATH = r'C:\Program Files\GDAL\gdal202'
 
 YUAN_JING='http://222.73.31.135:8080/yuanjing'
-ALLOWED_HOSTS=['192.168.1.135']
+ALLOWED_HOSTS=['192.168.1.248', '10.231.18.23']
 
 import os
 LOG_PATH= os.path.join( os.path.dirname(BASE_DIR),'log')

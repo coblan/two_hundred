@@ -17,6 +17,7 @@ DATA_PROXY ={
     'http': 'socks5://localhost:10899',
 } 
 DEV_STATUS='dev'
+
 GDAL_LIBRARY_PATH = r'C:\Program Files\GDAL\gdal202.dll'
 
 #YUAN_JING='http://222.73.31.135:8084'

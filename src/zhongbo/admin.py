@@ -2,7 +2,8 @@ from django.contrib import admin
 from helpers.director.shortcut import ModelTable,TablePage,page_dc,director,ModelFields,RowFilter,RowSort
 from .models import TBTaskBridge
 from helpers.maintenance.update_static_timestamp import js_stamp_dc
-
+from . import admin_gis
+from . import admin_chart
 # Register your models here.
 class TaskPage(TablePage):
     template='jb_admin/table.html'
@@ -12,10 +13,13 @@ class TaskPage(TablePage):
         return '案件列表'
     
     class tableCls(ModelTable):
+        """
+        三高task地址: http://10.231.18.25/CityGrid/CaseOperate_flat/ParticularDisplayInfo.aspx?categoryId=undefined&taskid=1806B1651274
+        """
         model=TBTaskBridge
         exclude=[]
         pop_edit_field='detail'
-        fields_sort=['yuan_eventNum','san_taskid','yuan_occurredStr','yuan_status','status','address','event_content','create_time','detail']
+        fields_sort=['yuan_eventNum','san_taskid','yuan_occurredStr','yuan_status','status','address','event_content','create_time','loc','detail']
         def get_operation(self):
             opes = super().get_operation()
             ls = [
