@@ -16,6 +16,7 @@ from urllib import parse
 from django.conf import settings
 import hashlib
 import os
+from urllib.parse import urlencode
 
 
 proxies =  getattr(settings, 'DATA_PROXY','')
@@ -25,6 +26,8 @@ def put_task_to_sangao(images,address,remark):
     #upload_image(r'C:\Users\Administrator\Desktop\JE20180308170521.jpg')
     #add_dc = address_2_info('会卓路涞港路闲置地')
     #submit_task(add_dc,"三高系统测试案件，请删除" , taskid)
+    if 'Cookie' not in headers:
+        headers['Cookie']=get_cookie()
     taskid=get_taskid()
     for image in images:
         image_path = save_image(image)
@@ -32,7 +35,7 @@ def put_task_to_sangao(images,address,remark):
     add_dc = address_2_info(address)
     success = submit_task(add_dc,remark , taskid)
     if not success:
-        headers['Cookie'] = get_cookie()
+        headers['Cookie']=get_cookie()
         taskid=get_taskid()
         for image in images:
             image_path = save_image(image)
@@ -43,12 +46,41 @@ def put_task_to_sangao(images,address,remark):
             raise UserWarning('上传任务失败')
     return taskid
 
-def get_cookie(): 
+def get_cookie():
     url = 'http://10.231.18.25/CityGrid/Logon.aspx'
-    data = '__VIEWSTATE=%2FwEPDwUKLTY2NDMxNzc3MGRkk1sQ5TsNvl2ZWXVV%2Fk%2BOiS67vOIsPEAvUh3rDdgEGws%3D&__EVENTVALIDATION=%2FwEWBgKi7IZqAobzk7oOAs61448FAqnM8OsBAoOQ69wEAtvg%2FWWhmSBDBuV8pbA32ZNXQNLjxJkIMjwIWwrWVMejLOTvFQ%3D%3D&txt_UserName=03005&txt_Password=8&ifwidth=1280&ifheight=1024&txt_LogIp=&btn_Login=+'
+    s = requests.Session()
+    
+    rt = s.get(url,proxies = proxies)
+    cookie  = rt.headers.get('Set-Cookie')
+    soup = BeautifulSoup(rt.text)
+    #logHeader={
+        #'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        #'Cookie':'%s; Hm_lvt_ba7c84ce230944c13900faeba642b2b4=1528377687,1529858265; Hm_lpvt_ba7c84ce230944c13900faeba642b2b4=1529859249'%cookie[:42],
+        #'Referer':'http://10.231.18.25/CityGrid/Logon.aspx',
+        #'Upgrade-Insecure-Requests':'1',
+        #'Content-Type':'application/x-www-form-urlencoded',
+        #'Host':'10.231.18.25',
+        #'Origin':'http://10.231.18.25',
+        #'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4882.400 QQBrowser/9.7.13039.400'
+    #}
+    data={
+       ' __VIEWSTATE':soup.select_one('#__VIEWSTATE')['value'],
+        '__VIEWSTATEGENERATOR':soup.select_one('#__VIEWSTATEGENERATOR')['value'],
+        '__EVENTVALIDATION':soup.select_one('#__EVENTVALIDATION')['value'],
+        'txt_UserName': '03005',
+        'txt_Password':'8', 
+        'txt_LogIp':'',
+        'btn_Login':'', 
+        'ifwidth':'2560',
+        'ifheight':'1440'   ,     
+    }
+   
+    
+    #data = '__VIEWSTATE=%2FwEPDwUKLTY2NDMxNzc3MGRkk1sQ5TsNvl2ZWXVV%2Fk%2BOiS67vOIsPEAvUh3rDdgEGws%3D&__EVENTVALIDATION=%2FwEWBgKi7IZqAobzk7oOAs61448FAqnM8OsBAoOQ69wEAtvg%2FWWhmSBDBuV8pbA32ZNXQNLjxJkIMjwIWwrWVMejLOTvFQ%3D%3D&txt_UserName=03005&txt_Password=8&ifwidth=1280&ifheight=1024&txt_LogIp=&btn_Login=+'
      
-    rt = requests.post(url, data = data, proxies = proxies)
-    return rt.headers.get('Set-Cookie')
+    rt = s.post(url, data = urlencode(data),  proxies = proxies)
+    #return rt.headers.get('Set-Cookie')
+    return cookie[:42]
     
 def save_image(image_url):
     rt = requests.get(image_url)
@@ -84,7 +116,7 @@ headers={
         'Accept-Language': 'zh-CN,zh;q=0.9',
         'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4882.400 QQBrowser/9.7.13039.400',
         #'Cookie': 'ASP.NET_SessionId=taulwuajqqcdlkysgyjci1gx;',
-        'Cookie':'ASP.NET_SessionId=cmf5kqjqzp0lsye1alo111vt', 
+        #'Cookie':'ASP.NET_SessionId=35npwpjlznpol2tpjvxn1ne0', 
 } 
 #def get_header(reload = False): 
     #inn_header = headers
