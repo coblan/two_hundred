@@ -23,6 +23,12 @@ class PcMenu(BaseEngine):
         crt_user = self.request.user
         menu=[
             {'label':'主页','url':page('home'),'icon':fa('fa-home'), 'visible':True}, 
+            {'label':'案件管理','icon':fa('fa-truck'),'visible':True,
+            'submenu':[
+                {'label':'案件列表','url':page('taskpage'), 'visible': can_touch(TBTaskBridge, crt_user),},
+                {'label':'excel','url':page('onexcel'), 'visible': can_touch(TBTaskBridge, crt_user),},
+                ]},              
+            
             
             {'label':'案件统计','icon':fa('fa-bar-chart'),'visible':True,
             'submenu':[ 
@@ -31,11 +37,7 @@ class PcMenu(BaseEngine):
                 #{'label':_('Tb Login Log'),'url':page('maindb.loginlog'), 'visible': can_touch(TbLoginlog, crt_user),},
                            ]}, 
             
-            {'label':'案件管理','icon':fa('fa-truck'),'visible':True,
-            'submenu':[
-                {'label':'案件列表','url':page('taskpage'), 'visible': can_touch(TBTaskBridge, crt_user),},
-                #{'label':_('Tb Login Log'),'url':page('maindb.loginlog'), 'visible': can_touch(TbLoginlog, crt_user),},
-                ]},   
+ 
             {'label':'GIS分析','icon':fa('fa-map-marker'),'visible':True,
             'submenu':[
                 {'label':'散点图','url':page('scatter'), 'visible': can_touch(TBTaskBridge, crt_user),},
