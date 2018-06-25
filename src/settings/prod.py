@@ -53,6 +53,14 @@ LOGGING = {
             'backupCount':3,
             'formatter':'standard',
             'filename': os.path.join(LOG_PATH,'export_to_sangao.log'),            
+            },    
+        'conver_cord':{
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 1024*1024*5,
+            'backupCount':3,
+            'formatter':'standard',
+            'filename': os.path.join(LOG_PATH,'conver_cord.log'),            
             },         
         'console': {
                    'class': 'logging.StreamHandler',
@@ -68,7 +76,12 @@ LOGGING = {
             'handlers': ['export_to_sangao'],
             'level': 'DEBUG',
             'propagate': True,            
-            },        
+            }, 
+        'conver_cord':{
+            'handlers': ['conver_cord'],
+            'level': 'DEBUG',
+            'propagate': True,              
+        }        
         #'task':{
             #'handlers': ['rotfile'],
             #'level': 'DEBUG',

@@ -50,7 +50,16 @@ LOGGING = {
             'backupCount':3,
             'formatter':'standard',
             'filename': os.path.join(LOG_PATH,'getcase.log'),            
-            },    
+            }, 
+        'conver_cord':{
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 1024*1024*5,
+            'backupCount':3,
+            'formatter':'standard',
+            'filename': os.path.join(LOG_PATH,'conver_cord.log'),            
+            }, 
+        
         'console': {
             'level':'DEBUG',
             'class': 'logging.StreamHandler',
@@ -68,6 +77,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,            
             },
+        'conver_cord':{
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,              
+        }
       
     }
 }
