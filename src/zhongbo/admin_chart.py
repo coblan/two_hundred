@@ -33,26 +33,26 @@ class DistrictPie(FieldsPage):
                         {'value':25,'name':'已结案'}
                     ],
                     'data2':[
-                        {'value':11, 'name':'徐津'},
+                        {'value':11, 'name':'徐泾'},
                         {'value':8, 'name':'赵巷'},
                         {'value':7, 'name':'朱家角'},
                         {'value':4, 'name':'夏阳'},
                         
-                        {'value':2, 'name':'徐津'},
+                        {'value':2, 'name':'徐泾'},
                         {'value':6, 'name':'赵巷'},
                         {'value':6, 'name':'朱家角'},
                         {'value':11, 'name':'夏阳'},
                         
                        
-                        {'value':4, 'name':'徐津'},
+                        {'value':4, 'name':'徐泾'},
                         {'value':7, 'name':'赵巷'} ,
                          {'value':7, 'name':'夏阳'},
                         
-                        {'value':18, 'name':'徐津'},
+                        {'value':18, 'name':'徐泾'},
                         {'value':7, 'name':'赵巷'},
                         {'value':8, 'name':'朱家角'},
                         
-                         {'value':2, 'name':'徐津'},
+                         {'value':2, 'name':'徐泾'},
                         {'value':6, 'name':'赵巷'},
                         {'value':6, 'name':'朱家角'},
                         {'value':11, 'name':'夏阳'},

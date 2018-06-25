@@ -26,7 +26,7 @@ class PcMenu(BaseEngine):
             {'label':'案件管理','icon':fa('fa-truck'),'visible':True,
             'submenu':[
                 {'label':'案件列表','url':page('taskpage'), 'visible': can_touch(TBTaskBridge, crt_user),},
-                {'label':'excel','url':page('onexcel'), 'visible': can_touch(TBTaskBridge, crt_user),},
+                {'label':'案件分类','url':page('onexcel'), 'visible': can_touch(TBTaskBridge, crt_user),},
                 ]},              
             
             

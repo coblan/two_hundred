@@ -21,6 +21,9 @@ from urllib.parse import urlencode
 
 proxies =  getattr(settings, 'DATA_PROXY','')
 
+class LocConverError(UserWarning):
+    pass
+
 def put_task_to_sangao(images,address,remark):
     #taskid=get_taskid()
     #upload_image(r'C:\Users\Administrator\Desktop\JE20180308170521.jpg')
@@ -48,23 +51,26 @@ def put_task_to_sangao(images,address,remark):
 
 def get_cookie():
     url = 'http://10.231.18.25/CityGrid/Logon.aspx'
-    s = requests.Session()
+    #s = requests.Session()
     
-    rt = s.get(url,proxies = proxies)
+    rt = requests.get(url,proxies = proxies)
     cookie  = rt.headers.get('Set-Cookie')
     soup = BeautifulSoup(rt.text)
-    #logHeader={
-        #'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        #'Cookie':'%s; Hm_lvt_ba7c84ce230944c13900faeba642b2b4=1528377687,1529858265; Hm_lpvt_ba7c84ce230944c13900faeba642b2b4=1529859249'%cookie[:42],
-        #'Referer':'http://10.231.18.25/CityGrid/Logon.aspx',
+    logHeader={
+        'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Cookie':  cookie, #'%s; Hm_lvt_ba7c84ce230944c13900faeba642b2b4=1528377687,1529858265; Hm_lpvt_ba7c84ce230944c13900faeba642b2b4=1529859249'%cookie[:42],
+        'Referer':'http://10.231.18.25/CityGrid/Logon.aspx',
+        'Upgrade-Insecure-Requests':'1',
+        'Content-Type':'application/x-www-form-urlencoded',
+        'Host':'10.231.18.25',
+        'Origin':'http://10.231.18.25',
+        'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4882.400 QQBrowser/9.7.13039.400'
+    }
+    #s.headers.update({
         #'Upgrade-Insecure-Requests':'1',
-        #'Content-Type':'application/x-www-form-urlencoded',
-        #'Host':'10.231.18.25',
-        #'Origin':'http://10.231.18.25',
-        #'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4882.400 QQBrowser/9.7.13039.400'
-    #}
+    #})
     data={
-       ' __VIEWSTATE':soup.select_one('#__VIEWSTATE')['value'],
+       '__VIEWSTATE':soup.select_one('#__VIEWSTATE')['value'],
         '__VIEWSTATEGENERATOR':soup.select_one('#__VIEWSTATEGENERATOR')['value'],
         '__EVENTVALIDATION':soup.select_one('#__EVENTVALIDATION')['value'],
         'txt_UserName': '03005',
@@ -75,10 +81,15 @@ def get_cookie():
         'ifheight':'1440'   ,     
     }
    
-    
+    #m = MultipartEncoder(
+        #fields= data
+        #)
+    #logHeader.update({
+         #'Content-Type': m.content_type
+    #})
     #data = '__VIEWSTATE=%2FwEPDwUKLTY2NDMxNzc3MGRkk1sQ5TsNvl2ZWXVV%2Fk%2BOiS67vOIsPEAvUh3rDdgEGws%3D&__EVENTVALIDATION=%2FwEWBgKi7IZqAobzk7oOAs61448FAqnM8OsBAoOQ69wEAtvg%2FWWhmSBDBuV8pbA32ZNXQNLjxJkIMjwIWwrWVMejLOTvFQ%3D%3D&txt_UserName=03005&txt_Password=8&ifwidth=1280&ifheight=1024&txt_LogIp=&btn_Login=+'
      
-    rt = s.post(url, data = urlencode(data),  proxies = proxies)
+    rt = requests.post(url, data = urlencode(data), headers = logHeader,  proxies = proxies)
     #return rt.headers.get('Set-Cookie')
     return cookie[:42]
     
@@ -177,6 +188,8 @@ def address_2_info(address):
         'hdn_Y':y,
         'text_address':address
     }
+    if x == '0' or y == '0':
+        raise LocConverError('location can not convert ')
     return dc
     
 

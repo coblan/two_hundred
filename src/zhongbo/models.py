@@ -39,8 +39,10 @@ SAN_STATUS=(
 )
 
 DISTRICT=(
-    (0,'徐静'),
-    (1,'赵项')
+    (0,'徐泾'),
+    (1,'赵巷'), 
+    (2, '夏阳'), 
+    (3, '朱家角')
 )
 
 class TBTaskBridge(models.Model):

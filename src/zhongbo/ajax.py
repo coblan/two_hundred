@@ -1,5 +1,5 @@
 # encoding:utf-8
-from .sangao_port import put_task_to_sangao
+from .sangao_port import put_task_to_sangao, LocConverError
 from .models import TBTaskBridge
 
 def get_global():
@@ -11,8 +11,12 @@ def putIntoSangao(pk):
     """
     task = TBTaskBridge.objects.get(pk=pk)
     images=task.yuan_photos.split(';')
-    taskid = put_task_to_sangao(images, task.address, task.event_content)
-    task.san_taskid=taskid
+    try:
+        taskid = put_task_to_sangao(images, task.address, task.event_content)
+        task.san_taskid=taskid
+    except LocConverError as e:
+        taskid = ''
+        task.status = 2
     task.save()
-    return {'status':'success','taskid':taskid}
+    return {'status':'success', 'row': {'taskid':taskid, 'status': task.status}}
     
