@@ -4,7 +4,7 @@ var zhongbo_logic={
         ex.assign(this.op_funs, {
             putTaskIntoSangao: function () {
                 cfg.show_load()
-                var count =self.selected.lenth
+                var count =self.selected.length
                 ex.each(self.selected,function(item){
                     var post_data=[{fun:'putIntoSangao',pk:item.pk}]
                     ex.post('/d/ajax/zhongbo',JSON.stringify(post_data),function(resp){

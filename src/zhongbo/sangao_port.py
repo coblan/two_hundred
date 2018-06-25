@@ -18,6 +18,8 @@ import hashlib
 import os
 from urllib.parse import urlencode
 
+import logging
+log = logging.getLogger('export_to_sangao')
 
 proxies =  getattr(settings, 'DATA_PROXY','')
 
@@ -91,6 +93,7 @@ def get_cookie():
      
     rt = requests.post(url, data = urlencode(data), headers = logHeader,  proxies = proxies)
     #return rt.headers.get('Set-Cookie')
+    log.info('获取到cookie:%s' % cookie)
     return cookie[:42]
     
 def save_image(image_url):
@@ -145,9 +148,10 @@ def get_taskid():
     try:
         ss = soup.select('#taskhid')
         taskid= ss[0]['value']
+        log.info('获取到TASKID:%s' % taskid)
         return taskid
     except:
-        print('不能从html中获取taskid')
+        log.info('不能从html中获取taskid')
 
 def upload_image(fl_path):
     """"""
@@ -189,6 +193,7 @@ def address_2_info(address):
         'text_address':address
     }
     if x == '0' or y == '0':
+        log.info('不能获取到地理坐标')
         raise LocConverError('location can not convert ')
     return dc
     
@@ -254,7 +259,12 @@ def submit_task(address_dc,remark,taskid):
     data_str=parse.urlencode(data)
     rt = requests.post(url,data=data_str,headers=inn_header,proxies=proxies)
     #print(rt.text)
-    return rt.text.startswith('"True')
+    success = rt.text.startswith('"True')
+    if success:
+        log.info('任务上传三高成功')
+    else:
+        log.info('任务上传三高不成功')
+    return success
     
     
      

@@ -45,7 +45,15 @@ LOGGING = {
             'backupCount':3,
             'formatter':'standard',
             'filename': os.path.join(LOG_PATH,'getcase.log'),            
-            },    
+            },  
+        'export_to_sangao':{
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'maxBytes': 1024*1024*5,
+            'backupCount':3,
+            'formatter':'standard',
+            'filename': os.path.join(LOG_PATH,'export_to_sangao.log'),            
+            },         
         'console': {
                    'class': 'logging.StreamHandler',
                },        
@@ -56,6 +64,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,            
             },
+        'export_to_sangao': {
+            'handlers': ['export_to_sangao'],
+            'level': 'DEBUG',
+            'propagate': True,            
+            },        
         #'task':{
             #'handlers': ['rotfile'],
             #'level': 'DEBUG',

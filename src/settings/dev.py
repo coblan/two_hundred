@@ -63,6 +63,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,            
             },
+        'export_to_sangao': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,            
+            },
       
     }
 }
