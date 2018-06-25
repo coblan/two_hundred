@@ -36,7 +36,7 @@ def put_task_to_sangao(images,address,remark):
     taskid=get_taskid()
     for image in images:
         image_path = save_image(image)
-        upload_image(image_path)
+        upload_image(image_path, taskid)
     add_dc = address_2_info(address)
     success = submit_task(add_dc,remark , taskid)
     if not success:
@@ -44,7 +44,7 @@ def put_task_to_sangao(images,address,remark):
         taskid=get_taskid()
         for image in images:
             image_path = save_image(image)
-            upload_image(image_path)
+            upload_image(image_path, taskid)
         add_dc = address_2_info(address)
         success = submit_task(add_dc,remark , taskid)
         if not success:
@@ -153,17 +153,21 @@ def get_taskid():
     except:
         log.info('不能从html中获取taskid')
 
-def upload_image(fl_path):
+def upload_image(fl_path, taskid):
     """"""
-    url="http://10.231.18.25/CityGrid/caseoperate_flat/SelectMediaInfo.aspx?CaseStatus=T&TaskId=1806J9617532&CaseType="  
+    
+    url="http://10.231.18.25/CityGrid/caseoperate_flat/SelectMediaInfo.aspx?CaseStatus=T&TaskId=%(taskid)s&CaseType=" % {'taskid': taskid,}
     mt=re.search(r'[^/\\]+\.(\w+)',fl_path)
     base_name=mt.group()
     sufix=mt.group(1)
     
+    rt = requests.get(url)
+    soup = BeautifulSoup(rt.text)
+    
     m = MultipartEncoder(
         fields={'PicFile': (base_name, open(fl_path, 'rb'), 'image/%s'%sufix),
-                '__VIEWSTATE':'/wEPDwUKMTQ5OTMyNDAzMg9kFgICAw8WAh4HZW5jdHlwZQUTbXVsdGlwYXJ0L2Zvcm0tZGF0YRYEAgMPFgIeCGRpc2FibGVkZGQCBA8WAh8BZGRkxQ4oQ+NFCYp1YlXGoghvWLTK0TKp7dexirT328BUhtI=',
-                '__EVENTVALIDATION':'/wEWDwK1nLsZAuzJ454LAsmem4wMAuXu0mECg8an8gcCkqKqlg8Cp52w5QYC766n2gECr5/YsgoC4b2wlA8C/ZKZjwEC5Ov3nAsC3oSUrwoCg9v//wECi5OlxgWm5woeEIk+sjqp15HTFl0yKUHW9raB4mAhFPwwYIXqmA==',
+                '__VIEWSTATE':soup.select_one('#__VIEWSTATE')['value'],  # '/wEPDwUKMTQ5OTMyNDAzMg9kFgICAw8WAh4HZW5jdHlwZQUTbXVsdGlwYXJ0L2Zvcm0tZGF0YRYEAgMPFgIeCGRpc2FibGVkZGQCBA8WAh8BZGRkxQ4oQ+NFCYp1YlXGoghvWLTK0TKp7dexirT328BUhtI=',
+                '__EVENTVALIDATION': soup.select_one('#__EVENTVALIDATION')['value'], #'/wEWDwK1nLsZAuzJ454LAsmem4wMAuXu0mECg8an8gcCkqKqlg8Cp52w5QYC766n2gECr5/YsgoC4b2wlA8C/ZKZjwEC5Ov3nAsC3oSUrwoCg9v//wECi5OlxgWm5woeEIk+sjqp15HTFl0yKUHW9raB4mAhFPwwYIXqmA==',
                 'btnPicAddOk':'提交',
                 'pageindex':'0'}
         )
