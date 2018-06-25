@@ -161,7 +161,7 @@ def upload_image(fl_path, taskid):
     base_name=mt.group()
     sufix=mt.group(1)
     
-    rt = requests.get(url)
+    rt = requests.get(url, proxies=proxies)
     soup = BeautifulSoup(rt.text)
     
     m = MultipartEncoder(

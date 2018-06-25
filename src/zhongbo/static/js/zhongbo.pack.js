@@ -84,7 +84,7 @@ var zhongbo_logic = {
                     var post_data = [{ fun: 'putIntoSangao', pk: item.pk }];
                     ex.post('/d/ajax/zhongbo', JSON.stringify(post_data), function (resp) {
                         //alert(resp)
-                        var row = resp.row;
+                        var row = resp.putIntoSangao.row;
                         item.san_taskid = row.taskid;
                         item.status = row.status;
 
