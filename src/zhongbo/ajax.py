@@ -1,11 +1,20 @@
 # encoding:utf-8
 from .sangao_port import put_task_to_sangao, LocConverError
 from .models import TBTaskBridge
+from .port_yuan import submitTaskToYuan, updateCase
+from .sangao_port import updateTask
 import logging
 log = logging.getLogger('export_to_sangao')
 
 def get_global():
     return globals()
+
+def updateFromSan(taskids): 
+    return updateTask(taskids)
+
+def updateFromYuan(): 
+    updateCase()
+    return {'status': 'success',}
 
 def putIntoSangao(pk):
     """
@@ -23,4 +32,9 @@ def putIntoSangao(pk):
     task.save()
     log.info('结束本次上传 ID :%s' % pk)
     return {'status':'success', 'row': {'taskid':taskid, 'status': task.status}}
+
+def taskToYuanjing(pks): 
+    tasks = TBTaskBridge.objects.filter(pk__in = pks)
+    submitTaskToYuan(tasks)
+    return {'status': 'success',}
     

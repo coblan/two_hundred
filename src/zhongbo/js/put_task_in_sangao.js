@@ -2,6 +2,14 @@ var zhongbo_logic={
     mounted:function(){
         var self=this
         ex.assign(this.op_funs, {
+            updateFromYuan:function(){
+                cfg.show_load()
+                var post_data=[{fun:'updateFromYuan'}]
+                ex.post('/d/ajax/zhongbo',JSON.stringify(post_data),function(resp){
+                    cfg.hide_load()
+                    cfg.showMsg('更新完成，请刷新页面！')
+                })
+            },
             putTaskIntoSangao: function () {
                 cfg.show_load()
                 var count =self.selected.length
@@ -20,6 +28,39 @@ var zhongbo_logic={
                     })
                 })
             },
+            updateFromSan:function(){
+                var taskids=ex.map(self.selected,function(item){
+                    return item.san_taskid
+                })
+                var post_data=[{fun:'updateFromSan',taskids:taskids}]
+                cfg.show_load()
+                ex.post('/d/ajax/zhongbo',JSON.stringify(post_data),function(resp){
+                    var new_rows = resp.updateFromSan
+                    ex.each(self.selected,function(item){
+                        var new_row=ex.findone(new_rows,{san_taskid:item.san_taskid})
+                        ex.assign(item,new_row)
+                    })
+                    cfg.hide_load(400)
+                })
+            },
+            taskToYuanjing:function(){
+                //eg1
+                layer.confirm('真的准备好提交到【远景系统】吗？', {icon: 3, title:'提示'}, function(index){
+                    //do something
+                    var pks = ex.map(self.selected,function(item){
+                        return item.pk
+                    })
+                    var post_data=[{fun:'taskToYuanjing',pks:pks}]
+                    cfg.show_load()
+                    ex.post('/d/ajax/zhongbo',JSON.stringify(post_data),function(resp){
+                        cfg.hide_load(400)
+                    })
+
+                    layer.close(index);
+                });
+
+
+            }
         })
     }
 }

@@ -17,7 +17,9 @@ from django.conf import settings
 import hashlib
 import os
 from urllib.parse import urlencode
-
+from .models import TBTaskBridge
+from helpers.case.gisapp.sangao.cord_convert import cord2loc
+from django.contrib.gis.geos import Point
 import logging
 log = logging.getLogger('export_to_sangao')
 
@@ -26,7 +28,30 @@ proxies =  getattr(settings, 'DATA_PROXY','')
 class LocConverError(UserWarning):
     pass
 
+def updateTask(taskids): 
+    """
+    从网格化更新task的内容
+    """
+    log.info('从三高更新案件：%s' % ','.join(taskids))
+    url = settings.SANGO_BRIDGE+'/rq'
+    data={
+        'fun':'jianduTask',
+        'taskids':taskids, 
+    }   
+    rt = requests.post(url, data = json.dumps(data), proxies = proxies)
+    case_list = json.loads(rt.text)
+    ls = []
+    for case in case_list:
+        TBTaskBridge.objects.filter(san_taskid = case['taskid']).update(san_status = case['status'])
+        ls.append({'san_taskid': case['taskid'],'san_status': case['status'], })
+    log.info('更新完成，返回的案件数 %s' % len(case_list))
+    return ls
+    
+
 def put_task_to_sangao(images,address,remark):
+    """
+    主函数：将内容导入网格化系统
+    """
     #taskid=get_taskid()
     #upload_image(r'C:\Users\Administrator\Desktop\JE20180308170521.jpg')
     #add_dc = address_2_info('会卓路涞港路闲置地')
@@ -50,6 +75,11 @@ def put_task_to_sangao(images,address,remark):
         if not success:
             raise UserWarning('上传任务失败')
     return taskid
+
+def addrToPoint(address): 
+    dc = address_2_info(address)
+    loc_x,loc_y = cord2loc( float( dc['hdn_X']), float( dc['hdn_Y']) )
+    return Point(x=loc_x,y=loc_y)    
 
 def get_cookie():
     url = 'http://10.231.18.25/CityGrid/Logon.aspx'

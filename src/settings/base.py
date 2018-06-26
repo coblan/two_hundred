@@ -147,4 +147,6 @@ else:
 MEDIA_ROOT= os.path.join( os.path.dirname(BASE_DIR),'media')
 MEDIA_URL = '/media/'
 
-ASGI_APPLICATION = 'hello.routing.application'
+#ASGI_APPLICATION = 'hello.routing.application'
+
+SANGO_BRIDGE='http://12.110.185.17:8499'

@@ -51,7 +51,9 @@ class TBTaskBridge(models.Model):
     yuan_photos = models.CharField(verbose_name = '远景图片', max_length = 1000)
     yuan_occurredStr=models.DateField(verbose_name='检查日期',max_length=20,null=True)
     yuan_status=models.IntegerField(verbose_name='远景系统状态',choices=YUAN_STATUS,default=0)
-    san_taskid = models.CharField(verbose_name = '三高taskid', max_length = 30,blank=True)
+    san_taskid = models.CharField(verbose_name = '网格化任务号', max_length = 30,blank=True)
+    san_remark = models.CharField(verbose_name = '网格化回复', max_length = 700,blank=True)
+    
     address = models.CharField(verbose_name = '地址', max_length = 400)
     event_content = models.CharField(verbose_name = '事件内容', max_length=300)
     loc = models.PointField(verbose_name='经纬度',blank=True,null=True)
