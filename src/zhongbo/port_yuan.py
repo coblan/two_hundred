@@ -9,6 +9,8 @@ from .models import TBTaskBridge
 import logging
 log = logging.getLogger('getcase')
 
+proxies =  getattr(settings, 'DATA_PROXY','')
+
 def updateCase(): 
 
     log.info('开始从远景系统导入数据')
@@ -87,20 +89,24 @@ def submitTaskToYuan(bridge_items):
         data.append({
             'taskid': item.yuan_id,
             'remark': item.san_remark,
-            'pictures': [],
+            'pictures': [base64Image(imgUrl) for imgUrl in item.san_image.split(';')],
         })
     access_token = get_token()
     url = settings.YUAN_JING+'/api?handler=event&method=import&access_token=%(access_token)s' % {'access_token': access_token,}
     rt = requests.post(url, data = {'data': json.dumps( data)})
-    print(rt.content)
+    #print(rt.content)
     log.info('提交结束')
 
-def dictImg(path): 
-    with open(r"C:\Users\heyul\Desktop\jj20180512141450.jpg", "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
-    p1 = 'data:image/jpeg;base64,%(data)s' % {'data': encoded_string,}
-    with open(r"C:\Users\heyul\Desktop\jj20180512140349.jpg", "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
-        p2 = 'data:image/jpeg;base64,%(data)s' % {'data': encoded_string,}  
+def base64Image(imgUrl): 
+    rt = requests.get(imgUrl, proxies = proxies)
+    encoded_string = base64.b64encode(rt.content).decode('utf-8')
+    base64Data = 'data:image/jpeg;base64,%(data)s' % {'data': encoded_string,}
+    return base64Data
+    #with open(r"C:\Users\heyul\Desktop\jj20180512141450.jpg", "rb") as image_file:
+        #encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+    #p1 = 'data:image/jpeg;base64,%(data)s' % {'data': encoded_string,}
+    #with open(r"C:\Users\heyul\Desktop\jj20180512140349.jpg", "rb") as image_file:
+        #encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+        #p2 = 'data:image/jpeg;base64,%(data)s' % {'data': encoded_string,}  
 
 

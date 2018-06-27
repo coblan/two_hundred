@@ -30,7 +30,11 @@ class LocConverError(UserWarning):
 
 def updateTask(taskids): 
     """
-    从网格化更新task的内容
+    功能：从网格化更新task的内容
+    
+    从sangao返回数据：
+    checkimage:18_180602084906_1884.jpg,18_180602084906_1887.jpg,18_180602084907_1891.jpg,18_180602180501_1873.jpg,18_180602180501_1876.jpg,18_180602180502_1879.jpg,18_180604101102_1881.jpg,18_180604101103_1884.jpg,18_180604101104_1886.jpg
+    
     """
     log.info('从三高更新案件：%s' % ','.join(taskids))
     url = settings.SANGO_BRIDGE+'/rq'
@@ -42,11 +46,29 @@ def updateTask(taskids):
     case_list = json.loads(rt.text)
     ls = []
     for case in case_list:
-        TBTaskBridge.objects.filter(san_taskid = case['taskid']).update(san_status = case['status'])
+        san_imgs = ';'.join([_parseCheckImage(x) for x in case['checkimage'].split(',')])
+        TBTaskBridge.objects.filter(san_taskid = case['taskid']).update(san_status = case['status'], san_image = san_imgs)
         ls.append({'san_taskid': case['taskid'],'san_status': case['status'], })
     log.info('更新完成，返回的案件数 %s' % len(case_list))
     return ls
-    
+
+def _parseCheckImage(imagName): 
+    """
+    @imageName:18_180602084906_1884.jpg
+    需要处理成:
+    http://10.231.18.4/Mediainfo/18/2018/6/2/18_180602084906_1884.jpg
+    """
+    mt = re.search('^(\d{2})_(\d{2})(\d{2})(\d{2})', imagName)
+    if mt:
+        par = mt.group(1)
+        year = '20' + mt.group(2)
+        month = str(int(mt.group(3)))
+        day = str(int(mt.group(4)))
+        imgUrl = 'http://10.231.18.4/Mediainfo/%(par)s/%(year)s/%(month)s/%(day)s/%(imagName)s' % locals()
+    else:
+        imgUrl = imagName
+    return imgUrl
+
 
 def put_task_to_sangao(images,address,remark):
     """
