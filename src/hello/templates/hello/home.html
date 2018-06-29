@@ -1,0 +1,219 @@
+{% extends "jb_admin/fields.html" %}
+{% load static %}
+{% load jsonify %}
+
+{% block extra_head %}
+
+<script>
+//    pie_data = {{ pie_data | jsonify }}
+    $(function(){
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data:pie_data.total_name
+            },
+            series: [
+                {
+                    name:'状态',
+                    type:'pie',
+                    selectedMode: 'single',
+                    radius: [0, '30%'],
+
+                    label: {
+                        normal: {
+                            position: 'inner'
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:pie_data.data1
+                },
+                {
+                    name:'区域',
+                    type:'pie',
+                    radius: ['40%', '55%'],
+                    label: {
+                        normal: {
+                            formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                            backgroundColor: '#eee',
+                            borderColor: '#aaa',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            // shadowBlur:3,
+                            // shadowOffsetX: 2,
+                            // shadowOffsetY: 2,
+                            // shadowColor: '#999',
+                            // padding: [0, 7],
+                            rich: {
+                                a: {
+                                    color: '#999',
+                                    lineHeight: 22,
+                                    align: 'center'
+                                },
+                                // abg: {
+                                //     backgroundColor: '#333',
+                                //     width: '100%',
+                                //     align: 'right',
+                                //     height: 22,
+                                //     borderRadius: [4, 4, 0, 0]
+                                // },
+                                hr: {
+                                    borderColor: '#aaa',
+                                    width: '100%',
+                                    borderWidth: 0.5,
+                                    height: 0
+                                },
+                                b: {
+                                    fontSize: 16,
+                                    lineHeight: 33
+                                },
+                                per: {
+                                    color: '#eee',
+                                    backgroundColor: '#334455',
+                                    padding: [2, 4],
+                                    borderRadius: 2
+                                }
+                            }
+                        }
+                    },
+                    data:pie_data.data2
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+    })
+
+</script>
+<style>
+.icon-block{
+    display: inline-block;
+    vertical-align: top;
+}
+/*.act{*/
+    /*position: relative;*/
+/*}*/
+/*.act img{*/
+    /*position: absolute;*/
+    /*top:50%;*/
+    /*left:50%;*/
+    /*transform: translate(-50%,-50%);*/
+/*}*/
+    .act:hover{
+        border: 2px solid #ce6090;
+        cursor: pointer;
+    }
+    .table .first-row{
+        background-color: #57bfda;
+        color: white;
+    }
+    .table .first-row td{
+        padding: 1em 0;
+    }
+    .table td{
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+
+{% block fields_content %}
+
+<div style="height: 20em;">
+    <div style="margin: 2em;float: left;">
+        <div class="icon-block act">
+            <a href="/pc/taskpage">
+                <img src="/static/home_img/caseList.png" alt="">
+            </a>
+
+        </div>
+
+        <div class="icon-block ">
+            <div class="act">
+                <a href="/pc/onexcel">
+                    <img src="/static/home_img/caseCat.png" alt="">
+                </a>
+            </div>
+            <div class="act" style="height: 90px;overflow: hidden">
+                <a href="/pc/district_pie">
+                    <img style="position: relative;top:-6px;" src="/static/home_img/caseStatus.png" alt="">
+                </a>
+
+            </div>
+        </div>
+        <div class="icon-block act">
+            <a href="/pc/timetask_bar">
+                <img src="/static/home_img/caseTrend.png" alt="">
+            </a>
+
+        </div>
+        <div class="icon-block">
+            <div>
+                <div class="icon-block act">
+                    <a href="/pc/jb_user">
+                        <img src="/static/home_img/user.png" alt="">
+                    </a>
+
+                </div>
+                <div class="icon-block act">
+                    <a href="/pc/jb_group">
+                        <img style="position: relative;top:-7px" src="/static/home_img/Role.png" alt="">
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="act">
+                <a href="/pc/scatter">
+                    <img style="position: relative;top:-7px;" src="/static/home_img/GIS.png" alt="">
+                </a>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div style="margin: 1em;border: 1px solid #ece9eb">
+    <table class="table">
+      <tr class="first-row">
+          <td >序号</td><td>街镇</td><td>所属区域</td><td>小三乱</td><td>暴露垃圾</td><td>违规处置渣土</td>
+          <td>道路破损</td><td>绿化缺失</td><td>乱堆物</td><td>垃圾箱破损</td><td>河道污染</td><td>其他</td><td>合计</td>
+      </tr>
+        <tr>
+            <td>1</td><td>徐泾镇</td><td>核心区</td><td>1</td><td>1</td><td>0</td><td>0</td><td>2</td><td>0</td><td>1</td><td>1</td><td>2</td><td>10</td>
+        </tr>
+        <tr>
+            <td>2</td><td>徐泾镇</td><td>延展区</td><td>8</td><td>5</td><td>0</td><td>5</td><td>9</td><td>4</td><td>1</td><td>2</td><td>5</td><td>40</td>
+        </tr>
+        <tr>
+            <td>3</td><td>徐泾镇</td><td>外围区</td><td>8</td><td>7</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>7</td><td>7</td><td>34</td>
+        </tr>
+        <tr>
+            <td>4</td><td>朱家角镇</td><td>古镇区</td><td>2</td><td>2</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>10</td>
+        </tr>
+        <tr>
+            <td></td><td>合计</td><td></td><td>19</td><td>15</td><td>0</td><td>7</td><td>11</td><td>5</td><td>3</td><td>10</td><td>16</td><td>94</td>
+        </tr>
+
+    </table>
+</div>
+
+{% endblock %}
+
