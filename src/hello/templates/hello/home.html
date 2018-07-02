@@ -100,23 +100,15 @@
 
 </script>
 <style>
-.icon-block{
-    display: inline-block;
-    vertical-align: top;
-}
-/*.act{*/
-    /*position: relative;*/
+/*.icon-block{*/
+    /*display: inline-block;*/
+    /*vertical-align: top;*/
 /*}*/
-/*.act img{*/
-    /*position: absolute;*/
-    /*top:50%;*/
-    /*left:50%;*/
-    /*transform: translate(-50%,-50%);*/
-/*}*/
-    .act:hover{
-        border: 2px solid #ce6090;
-        cursor: pointer;
-    }
+
+    /*.act:hover{*/
+        /*border: 2px solid #ce6090;*/
+        /*cursor: pointer;*/
+    /*}*/
     .table .first-row{
         background-color: #57bfda;
         color: white;
@@ -127,68 +119,122 @@
     .table td{
         text-align: center;
     }
+
+    .icon td{
+        text-align: center;
+        padding: 3px;
+    }
+    .icon a{
+        display: inline-block;
+    }
+.icon a:hover{
+    border: 2px solid #e56d6b;
+}
 </style>
 {% endblock %}
 
 
 {% block fields_content %}
 
-<div style="height: 20em;">
-    <div style="margin: 2em;float: left;">
-        <div class="icon-block act">
+<table class="icon" style="width: 56em;margin: 4em 2em;transform: scale(1.1);position: relative;left: 3em;">
+    <tr>
+        <td rowspan="2">
             <a href="/pc/taskpage">
                 <img src="/static/home_img/caseList.png" alt="">
             </a>
-
-        </div>
-
-        <div class="icon-block ">
-            <div class="act">
-                <a href="/pc/onexcel">
-                    <img src="/static/home_img/caseCat.png" alt="">
-                </a>
-            </div>
-            <div class="act" style="height: 90px;overflow: hidden">
-                <a href="/pc/district_pie">
-                    <img style="position: relative;top:-6px;" src="/static/home_img/caseStatus.png" alt="">
-                </a>
-
-            </div>
-        </div>
-        <div class="icon-block act">
+        </td>
+        <td >
+            <a href="/pc/onexcel">
+                <img src="/static/home_img/caseCat.png" alt="">
+            </a>
+        </td>
+        <td rowspan="2">
             <a href="/pc/timetask_bar">
                 <img src="/static/home_img/caseTrend.png" alt="">
             </a>
+        </td>
+        <td>
+            <a href="/pc/jb_user">
+                <img src="/static/home_img/user.png" alt="">
+            </a>
+        </td>
+        <td>
+            <a href="/pc/jb_group">
+                <img  src="/static/home_img/role.png" alt="">
+            </a>
+        </td>
 
-        </div>
-        <div class="icon-block">
-            <div>
-                <div class="icon-block act">
-                    <a href="/pc/jb_user">
-                        <img src="/static/home_img/user.png" alt="">
-                    </a>
+    </tr>
+    <tr>
+        <td >
+            <a href="/pc/district_pie">
+                <img  src="/static/home_img/caseStatus.png" alt="">
+            </a>
+        </td>
+        <td colspan="2">
+            <a href="/pc/scatter">
+                <img  src="/static/home_img/GIS.png" alt="">
+            </a>
+        </td>
+    </tr>
+</table>
 
-                </div>
-                <div class="icon-block act">
-                    <a href="/pc/jb_group">
-                        <img style="position: relative;top:-7px" src="/static/home_img/role.png" alt="">
-                    </a>
+<!--<div style="height: 20em;">-->
+    <!--<div style="margin: 2em;float: left;">-->
+        <!--<div class="icon-block act">-->
+            <!--<a href="/pc/taskpage">-->
+                <!--<img src="/static/home_img/caseList.png" alt="">-->
+            <!--</a>-->
 
-                </div>
-            </div>
+        <!--</div>-->
 
-            <div class="act">
-                <a href="/pc/scatter">
-                    <img style="position: relative;top:-7px;" src="/static/home_img/GIS.png" alt="">
-                </a>
+        <!--<div class="icon-block ">-->
+            <!--<div class="act">-->
+                <!--<a href="/pc/onexcel">-->
+                    <!--<img src="/static/home_img/caseCat.png" alt="">-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="act" style="height: 90px;overflow: hidden">-->
+                <!--<a href="/pc/district_pie">-->
+                    <!--<img  src="/static/home_img/caseStatus.png" alt="">-->
+                <!--</a>-->
 
-            </div>
-        </div>
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="icon-block act">-->
+            <!--<a href="/pc/timetask_bar">-->
+                <!--<img src="/static/home_img/caseTrend.png" alt="">-->
+            <!--</a>-->
+
+        <!--</div>-->
+        <!--<div class="icon-block">-->
+            <!--<div>-->
+                <!--<div class="icon-block act">-->
+                    <!--<a href="/pc/jb_user">-->
+                        <!--<img src="/static/home_img/user.png" alt="">-->
+                    <!--</a>-->
+
+                <!--</div>-->
+                <!--<div class="icon-block act">-->
+                    <!--<a href="/pc/jb_group">-->
+                        <!--<img  src="/static/home_img/role.png" alt="">-->
+                    <!--</a>-->
+
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="act">-->
+                <!--<a href="/pc/scatter">-->
+                    <!--<img  src="/static/home_img/GIS.png" alt="">-->
+                <!--</a>-->
+
+            <!--</div>-->
+        <!--</div>-->
 
 
-    </div>
+    <!--</div>-->
 
-</div>
+<!--</div>-->
 
 <div style="margin: 1em;border: 1px solid #ece9eb">
     <table class="table">
