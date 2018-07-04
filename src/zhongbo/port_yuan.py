@@ -89,7 +89,7 @@ def submitTaskToYuan(bridge_items):
         data.append({
             'taskid': item.yuan_id,
             'remark': item.san_remark,
-            'pictures': [base64Image(imgUrl) for imgUrl in item.san_image.split(';')],
+            'pictures': [base64Image(imgUrl) for imgUrl in item.san_image.split(';') if imgUrl],
         })
     access_token = get_token()
     url = settings.YUAN_JING+'/api?handler=event&method=import&access_token=%(access_token)s' % {'access_token': access_token,}
