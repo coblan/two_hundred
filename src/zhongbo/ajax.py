@@ -13,8 +13,8 @@ def updateFromSan(taskids):
     return updateTask(taskids)
 
 def updateFromYuan(): 
-    updateCase()
-    return {'status': 'success',}
+    count = updateCase()
+    return {'status': 'success','count':count}
 
 def putIntoSangao(pk):
     """
