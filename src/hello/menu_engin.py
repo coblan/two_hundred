@@ -59,7 +59,7 @@ class PcMenu(BaseEngine):
     
     def custome_ctx(self, ctx):
         ctx['js_stamp']=js_stamp
-        ctx['fast_config_panel']=True
+        ctx['fast_config_panel']=False
 
         return ctx      
 
