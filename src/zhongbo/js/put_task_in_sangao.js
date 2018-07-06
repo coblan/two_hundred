@@ -56,7 +56,7 @@ var zhongbo_logic={
                     var post_data=[{fun:'taskToYuanjing',pks:pks}]
                     cfg.show_load()
                     ex.post('/d/ajax/zhongbo',JSON.stringify(post_data),function(resp){
-                        cfg.hide_load(400)
+                        cfg.hide_load(1000)
                     })
 
                     layer.close(index);

@@ -81,8 +81,11 @@ var zhongbo_logic = {
                 cfg.show_load();
                 var post_data = [{ fun: 'updateFromYuan' }];
                 ex.post('/d/ajax/zhongbo', JSON.stringify(post_data), function (resp) {
+                    var count = resp.updateFromYuan.count;
                     cfg.hide_load();
-                    cfg.showMsg('更新完成，请刷新页面！');
+                    layer.alert('更新完成，新增' + count + '条数据', function () {
+                        location.reload();
+                    });
                 });
             },
             putTaskIntoSangao: function putTaskIntoSangao() {
@@ -128,7 +131,7 @@ var zhongbo_logic = {
                     var post_data = [{ fun: 'taskToYuanjing', pks: pks }];
                     cfg.show_load();
                     ex.post('/d/ajax/zhongbo', JSON.stringify(post_data), function (resp) {
-                        cfg.hide_load(400);
+                        cfg.hide_load(1000);
                     });
 
                     layer.close(index);
