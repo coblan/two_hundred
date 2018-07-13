@@ -47,7 +47,7 @@ def updateCase():
     count= len(case_list) 
     create_count = len(insertCases)
     log.info('抓取完成，共抓取了%s ; 新建%s' % (count,create_count) )
-    return count
+    return create_count
 
 
 def get_token(): 
