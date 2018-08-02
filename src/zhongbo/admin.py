@@ -1,5 +1,5 @@
 from django.contrib import admin
-from helpers.director.shortcut import ModelTable,TablePage,page_dc,director,ModelFields,RowFilter,RowSort
+from helpers.director.shortcut import ModelTable,TablePage,page_dc,director,ModelFields,RowFilter,RowSort,RowSearch
 from .models import TBTaskBridge
 from helpers.maintenance.update_static_timestamp import js_stamp_dc
 from . import admin_gis
@@ -63,7 +63,8 @@ class TaskPage(TablePage):
             }
         
         def inn_filter(self, query):
-            return query.order_by('-yuan_occurredStr')
+            return query.order_by('-pk')
+            #return query.order_by('-yuan_occurredStr')
         
         def get_context(self):
             ctx = ModelTable.get_context(self)
@@ -76,6 +77,9 @@ class TaskPage(TablePage):
             range_fields=['yuan_occurredStr']
         class sort(RowSort):
             names=['yuan_occurredStr']
+        
+        class search(RowSearch):
+            names=['yuan_eventNum']
 
 class TaskForm(ModelFields):
     class Meta:
