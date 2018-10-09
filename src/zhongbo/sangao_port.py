@@ -319,7 +319,10 @@ def submit_task(address_dc,remark,taskid):
     if success:
         log.info('任务上传三高成功')
     else:
-        log.info('任务上传三高不成功')
+        
+        log.info('任务上传三高【不成功】')
+        log.info(rt.text)
+        log.info('-' * 30)
     return success
     
     
