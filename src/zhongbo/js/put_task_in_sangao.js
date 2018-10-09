@@ -23,6 +23,7 @@ var zhongbo_logic={
                         var row =resp.putIntoSangao.row
                         item.san_taskid = row.taskid
                         item.status = row.status
+                        item._sangao_link= 'http://10.231.18.25/CityGrid/CaseOperate_flat/ParticularDisplayInfo.aspx?categoryId=undefined&taskid=' + item.san_taskid
 
                         count -=1
                         if(count <=0){
