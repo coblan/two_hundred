@@ -15,7 +15,10 @@ DATABASES = {
 #DEV_STATUS='dev'
 #GDAL_LIBRARY_PATH = r'C:\Program Files\GDAL\gdal202'
 
-YUAN_JING='http://222.73.31.135:8080/yuanjing'
+# 已经废弃
+#YUAN_JING='http://222.73.31.135:8080/yuanjing'
+YUAN_JING = 'http://222.73.227.168:8080/yuanjing'
+
 ALLOWED_HOSTS=['192.168.1.248', '10.231.18.23']
 
 import os
