@@ -17,8 +17,9 @@ DATABASES = {
 
 # 已经废弃
 #YUAN_JING='http://222.73.31.135:8080/yuanjing'
-#YUAN_JING = 'http://222.73.227.168:8080/yuanjing'
 
+
+#YUAN_JING = 'http://222.73.227.168:8080/yuanjing'
 YUAN_JING ='http://xc.yjep.com.cn:8080/yuanjing'
 
 
