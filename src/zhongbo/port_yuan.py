@@ -64,7 +64,7 @@ def get_data(token,start,end):
     # status='新增'
     # 'unit_code':'201805116508',
     data = {
-        'project_id': '201804040003',
+        'project_id': '20190212006', #'201804040003',
         'district':'201105290013',
         'send_time': start,#'2018-05-11',
         'to_time': end #'2018-05-12',
