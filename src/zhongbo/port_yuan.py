@@ -71,7 +71,20 @@ def get_data(token,start,end):
     }
     rt = requests.get(url, params = data)
     dc = json.loads(rt.text)
-    return dc.get('data')
+    ls1 = dc.get('data')
+    
+    # 请求额外的一个项目
+    data2 ={
+        'project_id': '201804040001', 
+        'district':'201105290013',
+        'send_time': start,
+        'to_time': end ,
+    }
+    rt2 = requests.get(url, params = data2)
+    dc2 = rt2.json()
+    ls2 = dc2.get('data')
+    ls = ls1 + ls2
+    return ls
     #print(rt.content)
 
 def submitTaskToYuan(bridge_items): 
