@@ -64,7 +64,7 @@ def get_data(token,start,end):
     # status='新增'
     # 'unit_code':'201805116508',
     data = {
-        'project_id': '201902120006', #'201804040003',
+        'project_id': '202005140001', # '201902120006', #'201804040003',
         'district':'201105290013',
         'send_time': start,#'2018-05-11',
         'to_time': end #'2018-05-12',
@@ -73,17 +73,18 @@ def get_data(token,start,end):
     dc = json.loads(rt.text)
     ls1 = dc.get('data')
     
-    # 请求额外的一个项目
-    data2 ={
-        'project_id': '201804040001', 
-        'district':'201105290013',
-        'send_time': start,
-        'to_time': end ,
-    }
-    rt2 = requests.get(url, params = data2)
-    dc2 = rt2.json()
-    ls2 = dc2.get('data')
-    ls = ls1 + ls2
+    ## 请求额外的一个项目 // 暂时屏蔽
+    #data2 ={
+        #'project_id': '201804040001', 
+        #'district':'201105290013',
+        #'send_time': start,
+        #'to_time': end ,
+    #}
+    #rt2 = requests.get(url, params = data2)
+    #dc2 = rt2.json()
+    #ls2 = dc2.get('data')
+    #ls = ls1 + ls2
+    ls = ls1
     return ls
     #print(rt.content)
 
