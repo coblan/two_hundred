@@ -55,6 +55,7 @@ def get_token():
     url = settings.YUAN_JING+'/api?handler=token&key=%(appkey)s&method=getAccessToken' % {'appkey': appkey,}
     log.debug('开始获取token url=%s'%url)
     rt = requests.get(url)
+    log.debug('返回结果:%s'%rt.text)
     dc = rt.josn()
     return dc.get('data').get('access_token')
 
