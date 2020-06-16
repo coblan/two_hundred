@@ -52,14 +52,14 @@ def updateCase():
 
 def get_token(): 
     appkey = 'yuanjingkey12345678910'
-    yuanjing_url= settings.YUAN_JING
-    url = yuanjing_url+'/api?handler=token&key=%(appkey)s&method=getAccessToken' % {'appkey': appkey,}
+    url = settings.YUAN_JING+'/api?handler=token&key=%(appkey)s&method=getAccessToken' % {'appkey': appkey,}
+    log.debug('开始获取token url=%s'%url)
     rt = requests.get(url)
-    dc = json.loads(rt.text)
+    dc = rt.josn()
     return dc.get('data').get('access_token')
 
 def get_data(token,start,end): 
-    access_token = get_token()
+    #access_token = get_token()
     url = settings.YUAN_JING+"/api?access_token=%(access_token)s&handler=event&method=export" % {'access_token': token,} 
     # status='新增'
     # 'unit_code':'201805116508',
