@@ -20,8 +20,9 @@ DATABASES = {
 
 
 #YUAN_JING = 'http://222.73.227.168:8080/yuanjing'
-YUAN_JING ='http://xc.yjep.com.cn:8080/yuanjing'
-
+#2019
+#YUAN_JING ='http://xc.yjep.com.cn:8080/yuanjing'
+YUAN_JING = 'http://222.73.227.162:8080/jbh/faces'
 
 ALLOWED_HOSTS=['192.168.1.248', '10.231.18.23']
 
