@@ -56,7 +56,7 @@ def get_token():
     log.debug('开始获取token url=%s'%url)
     rt = requests.get(url)
     log.debug('返回结果:%s'%rt.text)
-    dc = rt.josn()
+    dc = rt.json()
     return dc.get('data').get('access_token')
 
 def get_data(token,start,end): 
