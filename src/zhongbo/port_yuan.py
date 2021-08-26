@@ -72,7 +72,7 @@ def get_data(token,start,end):
         'send_time': start,#'2018-05-11',
         'to_time': end #'2018-05-12',
     }
-    log.debug('开始请求数据api，参数为:%s'%data)
+    log.debug('开始请求数据api,url:%s，参数为:%s'%(url,data))
     rt = requests.get(url, params = data)
     log.debug('请求结束，返回结果为:%s'%rt.text)
     dc = json.loads(rt.text)
