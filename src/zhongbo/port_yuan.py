@@ -69,7 +69,7 @@ def get_data(token,start,end):
         # 2021/8/26 修改
         'project_id': '202103230001',
         'district':'201105290013',
-        'send_time': start,#'2018-05-11',
+        'send_time': '2021-01-01', # start,#'2018-05-11',
         'to_time': end #'2018-05-12',
     }
     log.debug('开始请求数据api,url:%s，参数为:%s'%(url,data))
